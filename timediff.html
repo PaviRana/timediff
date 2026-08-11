@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time Difference Calculator</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:500px;
+    background:#ffffff;
+    border-radius:16px;
+    padding:35px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.25);
+}
+
+.header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.header h1{
+    color:#0f172a;
+    font-size:28px;
+    margin-bottom:8px;
+}
+
+.header p{
+    color:#64748b;
+    font-size:14px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    color:#334155;
+    font-weight:600;
+}
+
+input[type="time"]{
+    width:100%;
+    padding:14px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    font-size:16px;
+    transition:0.3s;
+}
+
+input[type="time"]:focus{
+    outline:none;
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,0.15);
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.result-card{
+    margin-top:25px;
+    padding:20px;
+    text-align:center;
+    background:#f8fafc;
+    border-radius:12px;
+    border-left:5px solid #2563eb;
+}
+
+.result-title{
+    color:#64748b;
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.result-value{
+    font-size:30px;
+    font-weight:700;
+    color:#0f172a;
+}
+
+.result-detail{
+    margin-top:8px;
+    color:#475569;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Time Difference Calculator</h1>
+        <p>Calculate duration between two times</p>
+    </div>
+
+    <div class="form-group">
+        <label>Start Time</label>
+        <input type="time" id="startTime">
+    </div>
+
+    <div class="form-group">
+        <label>End Time</label>
+        <input type="time" id="endTime">
+    </div>
+
+    <button onclick="calculateTime()">Calculate Duration</button>
+
+    <div class="result-card">
+        <div class="result-title">Calculated Duration</div>
+        <div class="result-value" id="result">--</div>
+        <div class="result-detail" id="details">
+            Select times and click Calculate
+        </div>
+    </div>
+
+</div>
+
+<script>
+function calculateTime() {
+
+    const start = document.getElementById("startTime").value;
+    const end = document.getElementById("endTime").value;
+
+    if(!start || !end){
+        document.getElementById("result").innerHTML = "--";
+        document.getElementById("details").innerHTML =
+        "Please select both start and end times";
+        return;
+    }
+
+    let startDate = new Date("2000-01-01T" + start);
+    let endDate = new Date("2000-01-01T" + end);
+
+    if(endDate < startDate){
+        endDate.setDate(endDate.getDate() + 1);
+    }
+
+    let diff = endDate - startDate;
+
+    let hours = Math.floor(diff / (1000 * 60 * 60));
+    let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    document.getElementById("result").innerHTML =
+    `${hours}h ${minutes}m`;
+
+    document.getElementById("details").innerHTML =
+    `${hours} Hours ${minutes} Minutes`;
+}
+</script>
+
+</body>
+</html>
